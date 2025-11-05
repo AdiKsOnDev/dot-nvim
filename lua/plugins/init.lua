@@ -190,12 +190,12 @@ local default_plugins = {
   {
     "numToStr/Comment.nvim",
     keys = {
-      { "gcc", mode = "n", desc = "Comment toggle current line" },
-      { "gc", mode = { "n", "o" }, desc = "Comment toggle linewise" },
-      { "gc", mode = "x", desc = "Comment toggle linewise (visual)" },
-      { "gbc", mode = "n", desc = "Comment toggle current block" },
-      { "gb", mode = { "n", "o" }, desc = "Comment toggle blockwise" },
-      { "gb", mode = "x", desc = "Comment toggle blockwise (visual)" },
+      { "gcc", mode = "n",          desc = "Comment toggle current line" },
+      { "gc",  mode = { "n", "o" }, desc = "Comment toggle linewise" },
+      { "gc",  mode = "x",          desc = "Comment toggle linewise (visual)" },
+      { "gbc", mode = "n",          desc = "Comment toggle current block" },
+      { "gb",  mode = { "n", "o" }, desc = "Comment toggle blockwise" },
+      { "gb",  mode = "x",          desc = "Comment toggle blockwise (visual)" },
     },
     init = function()
       require("core.utils").load_mappings "comment"
@@ -260,13 +260,61 @@ local default_plugins = {
   -- CUSTOM PLUGINS
   {
     'MeanderingProgrammer/render-markdown.nvim',
-    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.nvim' }, -- if you use the mini.nvim suite
+    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.nvim' }, -- if you use the mini.nvim suite
     -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.icons' }, -- if you use standalone mini plugins
-    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
-    opts = {},
+    opts = {
+      latex = {
+        enabled = true,
+        top_pad = 1,
+        bottom_pad = 1,
+      },
+
+      checkbox = {
+        checked = {
+          scope_highlight = "@markup.strikethrough",
+        },
+      },
+      code = {
+        language_border = ' ',
+        language_left = '',
+        language_right = '',
+      },
+
+      quote = { repeat_linebreak = true },
+
+      pipe_table = { preset = 'double' },
+
+      -- heading = { border = true },
+      indent = { enabled = true },
+    },
     ft = { 'markdown', 'quarto' },
+  },
+
+  {
+    "epwalsh/obsidian.nvim",
+    version = "*", -- recommended, use latest release instead of latest commit
+    lazy = true,
+    ft = "markdown",
+
+    dependencies = {
+      -- Required.
+      "nvim-lua/plenary.nvim",
+
+    },
+
+    opts = {
+      workspaces = {
+        {
+          name = "personal",
+          path = "~/Documents/Second Brain/",
+        },
+      },
+
+      ui = { enable = false },
+    },
   },
 }
 
