@@ -132,7 +132,7 @@ local default_plugins = {
 
   {
     "neovim/nvim-lspconfig",
-    event = "User FilePost",
+    event = { "BufReadPre", "BufNewFile" },
     config = function()
       require "plugins.configs.lspconfig"
       require "custom.configs.lspconfig"
@@ -266,6 +266,7 @@ local default_plugins = {
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
     opts = {
+      render_modes = true,
       latex = {
         enabled = true,
         top_pad = 1,
@@ -288,6 +289,7 @@ local default_plugins = {
       pipe_table = { preset = 'double' },
 
       -- heading = { border = true },
+      heading = { position = 'inline' },
       indent = { enabled = true },
     },
     ft = { 'markdown', 'quarto' },
@@ -315,6 +317,28 @@ local default_plugins = {
 
       ui = { enable = false },
     },
+  },
+
+  {
+    "folke/todo-comments.nvim",
+    event = "BufReadPost",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {
+      keywords = {
+        FIX = {
+          icon = " ", -- icon used for the sign, and in search results
+          color = "error", -- can be a hex color, or a named color (see below)
+          alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
+          -- signs = false, -- configure signs for some keywords individually
+        },
+        TODO = { icon = " ", color = "info" },
+        HACK = { icon = " ", color = "warning" },
+        WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
+        PERF = { icon = " ", color = "info", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+        NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+        TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
+      },
+    }
   },
 }
 
